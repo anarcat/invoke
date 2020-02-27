@@ -59,7 +59,13 @@ class Program(object):
                 names=("debug", "d"),
                 kind=bool,
                 default=False,
-                help="Enable debug output.",
+                help="Enable debug output (log level DEBUG).",
+            ),
+            Argument(
+                names=("verbose", "v"),
+                kind=bool,
+                default=False,
+                help="Enable verbose output (log level INFO).",
             ),
             Argument(
                 names=("dry", "R"),
@@ -421,7 +427,9 @@ class Program(object):
         # Enable debugging from here on out, if debug flag was given.
         # (Prior to this point, debugging requires setting INVOKE_DEBUG).
         if self.args.debug.value:
-            enable_logging()
+            enable_logging('DEBUG')
+        elif self.args.verbose.value:
+            enable_logging('INFO')
 
         # Short-circuit if --version
         if self.args.version.value:
